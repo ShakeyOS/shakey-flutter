@@ -1,5 +1,5 @@
 {
-	"name": "@elizaos/adapter-sqlite",
+	"name": "@elizaos/adapter-sqljs",
 	"version": "0.1.9",
 	"type": "module",
 	"main": "dist/index.js",
@@ -20,20 +20,16 @@
 	],
 	"dependencies": {
 		"@elizaos/core": "workspace:*",
-		"@types/better-sqlite3": "7.6.12",
-		"better-sqlite3": "11.6.0",
-		"sqlite-vec": "0.1.6"
+		"@types/sql.js": "1.4.9",
+		"sql.js": "1.12.0",
+		"uuid": "11.0.3"
 	},
 	"devDependencies": {
-		"tsup": "8.3.5",
-		"vitest": "^3.0.2",
-		"@vitest/coverage-v8": "^3.0.2"
+		"tsup": "8.3.5"
 	},
 	"scripts": {
 		"build": "tsup --format esm --dts",
-		"dev": "tsup --format esm --dts --watch",
-		"test": "vitest run",
-		"test:coverage": "vitest run --coverage"
+		"dev": "tsup --format esm --dts --watch"
 	},
 	"peerDependencies": {
 		"whatwg-url": "7.1.0"
