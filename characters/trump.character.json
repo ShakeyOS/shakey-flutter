@@ -3,9 +3,7 @@
     "clients": [],
     "modelProvider": "openai",
     "settings": {
-        "secrets": {
-            "OPENAI_API_KEY": ""
-        },
+        "secrets": {},
         "voice": {
             "model": "en_US-male-medium"
         }

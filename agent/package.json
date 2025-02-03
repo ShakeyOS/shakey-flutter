@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/agent",
-    "version": "0.1.8+build.1",
+    "version": "0.1.9",
     "main": "src/index.ts",
     "type": "module",
     "scripts": {
@@ -18,16 +18,25 @@
         "exec": "node --enable-source-maps --loader ts-node/esm src/index.ts"
     },
     "dependencies": {
+        "@elizaos/adapter-mongodb": "workspace:*",
+        "@elizaos/adapter-pglite": "workspace:*",
+        "@elizaos/adapter-postgres": "workspace:*",
+        "@elizaos/adapter-qdrant": "workspace:*",
+        "@elizaos/adapter-redis": "workspace:*",
         "@elizaos/adapter-sqlite": "workspace:*",
+        "@elizaos/adapter-supabase": "workspace:*",
         "@elizaos/client-auto": "workspace:*",
         "@elizaos/client-direct": "workspace:*",
         "@elizaos/client-discord": "workspace:*",
         "@elizaos/client-github": "workspace:*",
+        "@elizaos/client-instagram": "workspace:*",
         "@elizaos/client-lens": "workspace:*",
         "@elizaos/client-slack": "workspace:*",
         "@elizaos/client-telegram": "workspace:*",
+        "@elizaos/client-telegram-account": "workspace:*",
         "@elizaos/client-twitter": "workspace:*",
         "@elizaos/core": "workspace:*",
+        "@elizaos/plugin-di": "workspace:*",
         "@elizaos/plugin-image-generation": "workspace:*",
         "@elizaos/plugin-node": "workspace:*",
         "@elizaos/plugin-sgx": "workspace:*",
@@ -41,7 +50,7 @@
     },
     "devDependencies": {
         "@types/jest": "^29.5.14",
-        "@types/node": "^22.10.7",
+        "@types/node": "^22.13.0",
         "jest": "^29.7.0",
         "ts-jest": "^29.2.5",
         "ts-node": "10.9.2",
