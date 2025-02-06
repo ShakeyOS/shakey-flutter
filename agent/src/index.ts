@@ -42,6 +42,8 @@ import { MongoDBDatabaseAdapter } from "@elizaos/adapter-mongodb";
 import { RedisClient } from "@elizaos/adapter-redis";
 import { normalizeCharacter } from "@elizaos/plugin-di";
 import { MongoClient } from "mongodb";
+import { mainCharacter } from "./shakey.character";
+
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
 
@@ -369,7 +371,7 @@ export async function loadCharacters(
 
     if (loadedCharacters.length === 0) {
         elizaLogger.info("No characters found, using default character");
-        loadedCharacters.push(defaultCharacter);
+        loadedCharacters.push(mainCharacter);
     }
 
     return loadedCharacters;
@@ -1041,7 +1043,7 @@ const hasValidRemoteUrls = () =>
         let serverPort = Number.parseInt(settings.SERVER_PORT || "3000");
         const args = parseArguments();
         const charactersArg = args.characters || args.character;
-        let characters = [defaultCharacter];
+        let characters = [mainCharacter];
 
         if (process.env.IQ_WALLET_ADDRESS && process.env.IQSOlRPC) {
             characters = await loadCharacterFromOnchain();
