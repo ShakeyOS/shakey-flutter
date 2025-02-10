@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_shakey_app/language_service.dart';
 import 'package:flutter_shakey_app/message.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:google_ml_kit/google_ml_kit.dart' as mlKit;
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
@@ -31,6 +33,11 @@ class _ChatScreenState extends State<ChatScreen> {
   bool _isVoiceInput = false;
   bool _isSpeaking = false;
   FlutterTts flutterTts = FlutterTts();
+  String _selectedInputLanguageCode = 'en';
+  String _selectedOutputLanguageCode = 'en';
+  Map<String, String> _languagesMap = LanguageService.languagesMap;
+  final mlKit.LanguageIdentifier _languageIdentifier =
+      mlKit.GoogleMlKit.nlp.languageIdentifier();
 
   @override
   void initState() {
@@ -116,11 +123,35 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  Future<void> _detectLanguage(String text) async {
+    if (text.isEmpty) {
+      return;
+    }
+    try {
+      final String languageCode =
+          await _languageIdentifier.identifyLanguage(text);
+
+      if (LanguageService.languagesMap.containsKey(languageCode)) {
+        setState(() {
+          // Update the input language code with the detected language
+          _selectedInputLanguageCode = languageCode;
+          _selectedOutputLanguageCode = languageCode;
+        });
+
+        print("Detected language: $languageCode");
+      } else {
+        print("Language not supported");
+      }
+    } catch (e) {
+      print("Language detection failed: $e");
+    }
+  }
+
   Future<void> _speak(String text) async {
     setState(() {
       _isSpeaking = true; // Disable mic button
     });
-    await flutterTts.setLanguage("en-US");
+    await flutterTts.setLanguage(_selectedOutputLanguageCode);
     await flutterTts.setPitch(1.0);
     flutterTts.setCompletionHandler(() {
       setState(() {
@@ -169,6 +200,7 @@ class _ChatScreenState extends State<ChatScreen> {
       _speech.listen(
         onResult: (result) {
           if (result.finalResult) {
+            _detectLanguage(result.recognizedWords);
             talkWithEliza(result.recognizedWords);
             stopListening(); // It will stop after the speech is recognized.
           }
