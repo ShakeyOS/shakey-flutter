@@ -5,8 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_shakey_app/chat_screen.dart';
 import 'package:http/http.dart' as http;
 
-
-
 class AtiveAgent extends StatefulWidget {
   const AtiveAgent({super.key});
 
@@ -16,24 +14,19 @@ class AtiveAgent extends StatefulWidget {
 
 class _AtiveAgentState extends State<AtiveAgent>
     with SingleTickerProviderStateMixin {
-      // List of agents fetched from API //
+  // List of agents fetched from API //
   List<dynamic> agents = [];
   // Indicates if data is loading //
   bool isLoading = true;
- 
-  
 
-
-
-   @override
+  @override
   void initState() {
     super.initState();
     // Fetch agents on screen load //
     fetchAgents();
-    
   }
 
-    Future<void> fetchAgents() async {
+  Future<void> fetchAgents() async {
     final url = Uri.parse('http://10.0.2.2:3000/agents'); // API URL
     try {
       final response = await http.get(url); // HTTP GET request
@@ -58,8 +51,6 @@ class _AtiveAgentState extends State<AtiveAgent>
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
@@ -74,9 +65,6 @@ class _AtiveAgentState extends State<AtiveAgent>
             color: Colors.black,
           ),
         ),
-
-         
-      
       ),
       body: ListView.builder(
         itemCount: agents.length,
