@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_shakey_app/language_service.dart';
 import 'package:flutter_shakey_app/message.dart';
+import 'package:flutter_shakey_app/voice_screen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_ml_kit/google_ml_kit.dart' as mlKit;
@@ -149,12 +150,30 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<void> _speak(String text) async {
     setState(() {
+      //   int lastIndex = _message.lastIndexWhere((msg) => msg.message == text);
+      //   if (lastIndex != -1) {
+      //     _message[lastIndex] = Message(
+      //       isUser: false,
+      //       message: text,
+      //       date: _message[lastIndex].date,
+      //       showGif: true, // GIF show
+      //     );
+      //   }
       _isSpeaking = true; // Disable mic button
     });
     await flutterTts.setLanguage(_selectedOutputLanguageCode);
     await flutterTts.setPitch(1.0);
     flutterTts.setCompletionHandler(() {
       setState(() {
+        // int lastIndex = _message.lastIndexWhere((msg) => msg.showGif == true);
+        // if (lastIndex != -1) {
+        //   _message[lastIndex] = Message(
+        //     isUser: false,
+        //     message: _message[lastIndex].message,
+        //     date: _message[lastIndex].date,
+        //     showGif: false, // GIF hide
+        //   );
+        // }
         _isSpeaking = false;
       });
     });
@@ -233,6 +252,17 @@ class _ChatScreenState extends State<ChatScreen> {
         backgroundColor: Color(0xfff8f8f8),
         appBar: AppBar(
           title: Text(widget.agent['name'] ?? 'Chat'),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              VoiceScreen(agent: widget.agent)));
+                },
+                icon: Icon(Icons.smart_toy))
+          ],
           backgroundColor: Color(0xfff8f8f8),
         ),
         body: Container(
@@ -245,9 +275,10 @@ class _ChatScreenState extends State<ChatScreen> {
                   itemBuilder: (context, index) {
                     final message = _message[index];
                     return Messages(
-                        isUser: message.isUser,
-                        message: message.message,
-                        date: DateFormat('HH:mm').format(message.date));
+                      isUser: message.isUser,
+                      message: message.message,
+                      date: DateFormat('HH:mm').format(message.date),
+                    );
                   },
                 ),
               ),
