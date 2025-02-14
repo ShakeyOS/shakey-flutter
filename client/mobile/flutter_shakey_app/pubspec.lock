@@ -144,6 +144,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "10.8.0"
+  gif_view:
+    dependency: "direct main"
+    description:
+      name: gif_view
+      sha256: d2441d98bcd56b3fd00e869513aeaefa56849ab62f63675e7d55f5fa4517f27e
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   google_ml_kit:
     dependency: "direct main"
     description:
