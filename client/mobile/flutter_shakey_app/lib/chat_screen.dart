@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_shakey_app/image_screen.dart';
 import 'package:flutter_shakey_app/language_service.dart';
 import 'package:flutter_shakey_app/message.dart';
 import 'package:flutter_shakey_app/voice_screen.dart';
@@ -150,30 +151,12 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<void> _speak(String text) async {
     setState(() {
-      //   int lastIndex = _message.lastIndexWhere((msg) => msg.message == text);
-      //   if (lastIndex != -1) {
-      //     _message[lastIndex] = Message(
-      //       isUser: false,
-      //       message: text,
-      //       date: _message[lastIndex].date,
-      //       showGif: true, // GIF show
-      //     );
-      //   }
       _isSpeaking = true; // Disable mic button
     });
     await flutterTts.setLanguage(_selectedOutputLanguageCode);
     await flutterTts.setPitch(1.0);
     flutterTts.setCompletionHandler(() {
       setState(() {
-        // int lastIndex = _message.lastIndexWhere((msg) => msg.showGif == true);
-        // if (lastIndex != -1) {
-        //   _message[lastIndex] = Message(
-        //     isUser: false,
-        //     message: _message[lastIndex].message,
-        //     date: _message[lastIndex].date,
-        //     showGif: false, // GIF hide
-        //   );
-        // }
         _isSpeaking = false;
       });
     });
@@ -254,14 +237,21 @@ class _ChatScreenState extends State<ChatScreen> {
           title: Text(widget.agent['name'] ?? 'Chat'),
           actions: [
             IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            VoiceScreen(agent: widget.agent)));
+              },
+              icon: Icon(Icons.smart_toy),
+            ),
+            IconButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              VoiceScreen(agent: widget.agent)));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ImageScreen()));
                 },
-                icon: Icon(Icons.smart_toy))
+                icon: Icon(Icons.image))
           ],
           backgroundColor: Color(0xfff8f8f8),
         ),
