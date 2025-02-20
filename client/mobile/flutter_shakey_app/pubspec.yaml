@@ -50,6 +50,8 @@ dependencies:
   google_ml_kit: ^0.19.0
   gif_view: ^1.0.0
   stability_image_generation: ^0.0.4
+  image_gallery_saver_plus: ^3.0.5
+  path_provider: ^2.1.5
 
 
 
