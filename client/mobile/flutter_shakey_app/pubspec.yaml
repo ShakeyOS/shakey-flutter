@@ -52,6 +52,7 @@ dependencies:
   stability_image_generation: ^0.0.4
   image_gallery_saver_plus: ^3.0.5
   path_provider: ^2.1.5
+  agixtsdk: ^0.0.2
 
 
 
